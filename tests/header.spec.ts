@@ -1,3 +1,4 @@
+import { UserToken } from "./constants/tokens";
 import { test, expect } from "./playwright.setup";
 
 test.describe("Header – public", () => {
@@ -43,7 +44,7 @@ test.describe("Header – authenticated user", () => {
     await page.context().addCookies([
       {
         name: "auth_token",
-        value: "FAKE_VALID_JWT",
+        value: UserToken.EXISTING_USER_TOKEN,
         domain: "localhost",
         path: "/",
         httpOnly: false,
@@ -104,17 +105,17 @@ test.describe("Header – authenticated user", () => {
     await expect(page.getByRole("button", { name: "Wyloguj" })).toBeVisible();
   });
 
-  // test("clicking logo redirects to homepage", async ({ page }) => {
-  //   await page.goto("http://localhost:3000/dashboard");
-  //   await page.getByTestId("app-logo").click();
+  test("clicking logo redirects to homepage", async ({ page }) => {
+    await page.goto("http://localhost:3000/dashboard");
+    await page.getByTestId("app-logo").click();
 
-  //   await expect(page).toHaveURL("http://localhost:3000/");
-  // });
+    await expect(page).toHaveURL("http://localhost:3000/");
+  });
 
-  // test("clicking app title redirects to homepage", async ({ page }) => {
-  //   await page.goto("http://localhost:3000/dashboard");
-  //   await page.getByTestId("app-title").click();
+  test("clicking app title redirects to homepage", async ({ page }) => {
+    await page.goto("http://localhost:3000/dashboard");
+    await page.getByTestId("app-title").click();
 
-  //   await expect(page).toHaveURL("http://localhost:3000/");
-  // });
+    await expect(page).toHaveURL("http://localhost:3000/");
+  });
 });
