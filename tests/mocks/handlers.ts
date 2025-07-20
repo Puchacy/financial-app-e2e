@@ -1,7 +1,13 @@
-import { Cookie } from "./../../node_modules/@types/tough-cookie/index.d";
 import { http, HttpResponse } from "msw";
 import { dummyData } from "./dummyData";
 import { getUserFromRequest } from "./utils/getUserFromRequest";
+import { UserToken } from "../constants/tokens";
+import {
+  LoginUserRequestDto,
+  LoginUserResponseDto,
+  RegisterUserRequestDto,
+  RegisterUserResponseDto,
+} from "../../api";
 
 export const handlers = [
   http.get("http://localhost:5228/api/v1/users/me", () => {
@@ -56,6 +62,57 @@ export const handlers = [
 
       const data = dummyData[userKey].yearlyChart;
       return HttpResponse.json(data);
+    }
+  ),
+
+  // POST /api/v1/users/login
+  http.post("http://localhost:5228/api/v1/users/login", async ({ request }) => {
+    const body = (await request.json()) as LoginUserRequestDto;
+
+    if (
+      body.email === "existing@example.com" &&
+      body.password === "password123"
+    ) {
+      const response: LoginUserResponseDto = {
+        token: UserToken.EXISTING_USER_TOKEN,
+        user: {
+          id: 1,
+          name: "Jan",
+          surname: "Kowalski",
+          email: "existing@example.com",
+        },
+      };
+
+      return HttpResponse.json(response);
+    }
+
+    return HttpResponse.json(
+      { error: "Invalid email or password." },
+      { status: 401 }
+    );
+  }),
+
+  // POST /api/v1/users/register
+  http.post(
+    "http://localhost:5228/api/v1/users/register",
+    async ({ request }) => {
+      const body = (await request.json()) as RegisterUserRequestDto;
+
+      if (!body.email || !body.password || !body.name || !body.surname) {
+        return HttpResponse.json({ error: "Invalid input" }, { status: 400 });
+      }
+
+      const response: RegisterUserResponseDto = {
+        token: UserToken.NEW_USER_TOKEN,
+        user: {
+          id: 2,
+          name: body.name,
+          surname: body.surname,
+          email: body.email,
+        },
+      };
+
+      return HttpResponse.json(response);
     }
   ),
 ];

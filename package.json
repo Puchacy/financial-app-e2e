@@ -6,7 +6,8 @@
   "scripts": {
     "test": "playwright test",
     "test:report": "playwright show-report",
-    "test:ui": "playwright test --ui"
+    "test:ui": "playwright test --ui",
+    "generate:api": "ts-node ./scripts/generate-api.ts"
   },
   "repository": {
     "type": "git",
@@ -24,6 +25,9 @@
     "@playwright/test": "^1.54.1",
     "@types/node": "^24.0.15",
     "msw": "^2.10.4",
-    "playwright-msw": "^3.0.1"
+    "openapi-typescript-codegen": "^0.29.0",
+    "playwright-msw": "^3.0.1",
+    "ts-node": "^10.9.2",
+    "typescript": "^5.8.3"
   }
 }
