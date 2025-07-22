@@ -25,6 +25,7 @@
     "@playwright/test": "^1.54.1",
     "@types/node": "^24.0.15",
     "msw": "^2.10.4",
+    "next": "^15.4.2",
     "openapi-typescript-codegen": "^0.29.0",
     "playwright-msw": "^3.0.1",
     "ts-node": "^10.9.2",

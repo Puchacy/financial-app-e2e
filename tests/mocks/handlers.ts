@@ -10,6 +10,7 @@ import {
 } from "../../api";
 
 export const handlers = [
+  // GET /api/v1/users/me
   http.get("http://localhost:5228/api/v1/users/me", () => {
     return HttpResponse.json({
       id: 1,
