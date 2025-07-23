@@ -26,7 +26,7 @@ export const transactionsHistoryExistingUser: TransactionDto[] = [
     type: TransactionType.EXPENSE,
   },
   {
-    amount: 300,
+    amount: 30000,
     date: "2025-06-20",
     description: "Zlecenie",
     type: TransactionType.INCOME,

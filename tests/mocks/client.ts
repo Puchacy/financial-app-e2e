@@ -1,5 +1,5 @@
 import { http, HttpResponse } from "next/experimental/testmode/playwright/msw";
-import { getUserFromRequest } from "./utils/users";
+import { getLoginUserResponse, getUserFromRequest } from "./utils/users";
 import {
   getMonthlyTransactionsResponse,
   getTransactionsHistoryResponse,
@@ -7,7 +7,6 @@ import {
 } from "./utils/transactions";
 import {
   LoginUserRequestDto,
-  LoginUserResponseDto,
   RegisterUserRequestDto,
   RegisterUserResponseDto,
 } from "../../api";
@@ -68,29 +67,9 @@ export const handlers = [
 
   // POST /api/v1/users/login
   http.post("http://localhost:5228/api/v1/users/login", async ({ request }) => {
-    const body = (await request.json()) as LoginUserRequestDto;
+    const credentials = (await request.json()) as LoginUserRequestDto;
 
-    if (
-      body.email === "existing@example.com" &&
-      body.password === "password123"
-    ) {
-      const response: LoginUserResponseDto = {
-        token: UserToken.EXISTING_USER_TOKEN,
-        user: {
-          id: 1,
-          name: "Jan",
-          surname: "Kowalski",
-          email: "existing@example.com",
-        },
-      };
-
-      return HttpResponse.json(response);
-    }
-
-    return HttpResponse.json(
-      { error: "Invalid email or password." },
-      { status: 401 }
-    );
+    return getLoginUserResponse(credentials);
   }),
 
   // POST /api/v1/users/register

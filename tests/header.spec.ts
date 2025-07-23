@@ -29,8 +29,8 @@ test.describe("Header – unauthenticated user", () => {
 
     await expect(page.getByTestId("auth-modal")).toBeVisible();
     await expect(page.getByTestId("auth-modal-login-avatar")).toBeVisible();
-    await expect(page.getByTestId("auth-modal-email-input")).toBeVisible();
-    await expect(page.getByTestId("auth-modal-password-input")).toBeVisible();
+    await expect(page.getByTestId("auth-modal-email-field")).toBeVisible();
+    await expect(page.getByTestId("auth-modal-password-field")).toBeVisible();
 
     const submitButton = page.getByTestId("auth-modal-submit-button");
     await expect(submitButton).toBeVisible();
@@ -48,12 +48,12 @@ test.describe("Header – unauthenticated user", () => {
     await page.getByRole("button", { name: "Zaloguj się" }).click();
     await page.getByTestId("auth-modal-mode-button").click();
 
-    await expect(page.getByRole("dialog")).toBeVisible();
+    await expect(page.getByTestId("auth-modal")).toBeVisible();
     await expect(page.getByTestId("auth-modal-register-avatar")).toBeVisible();
-    await expect(page.getByTestId("auth-modal-name-input")).toBeVisible();
-    await expect(page.getByTestId("auth-modal-surname-input")).toBeVisible();
-    await expect(page.getByTestId("auth-modal-email-input")).toBeVisible();
-    await expect(page.getByTestId("auth-modal-password-input")).toBeVisible();
+    await expect(page.getByTestId("auth-modal-name-field")).toBeVisible();
+    await expect(page.getByTestId("auth-modal-surname-field")).toBeVisible();
+    await expect(page.getByTestId("auth-modal-email-field")).toBeVisible();
+    await expect(page.getByTestId("auth-modal-password-field")).toBeVisible();
 
     const submitButton = page.getByTestId("auth-modal-submit-button");
     await expect(submitButton).toBeVisible();

@@ -7,17 +7,17 @@ export const monthlyTransactionsExistingUser: MonthlyTransactionsResponseDto = {
     {
       day: 1,
       expense: {
-        food: 25,
-        transport: 10,
+        food: 2500,
+        transport: 1000,
         entertainment: 0,
-        housing: 800,
+        housing: 80000,
         health: 0,
         shopping: 0,
         education: 0,
         travel: 0,
-        utilities: 350,
+        utilities: 35000,
         other: 0,
-        total: 1185,
+        total: 118500,
       },
       income: {
         total: 0,
@@ -26,17 +26,17 @@ export const monthlyTransactionsExistingUser: MonthlyTransactionsResponseDto = {
     {
       day: 2,
       expense: {
-        food: 25,
-        transport: 10,
+        food: 2500,
+        transport: 1000,
         entertainment: 0,
-        housing: 700,
+        housing: 70000,
         health: 0,
         shopping: 0,
         education: 0,
         travel: 0,
         utilities: 0,
         other: 0,
-        total: 735,
+        total: 73500,
       },
       income: {
         total: 0,
@@ -45,17 +45,17 @@ export const monthlyTransactionsExistingUser: MonthlyTransactionsResponseDto = {
     {
       day: 3,
       expense: {
-        food: 40,
+        food: 4000,
         transport: 0,
-        entertainment: 30,
+        entertainment: 3000,
         housing: 0,
         health: 0,
         shopping: 0,
         education: 0,
-        travel: 200,
+        travel: 20000,
         utilities: 0,
         other: 0,
-        total: 270,
+        total: 27000,
       },
       income: {
         total: 0,
@@ -64,9 +64,9 @@ export const monthlyTransactionsExistingUser: MonthlyTransactionsResponseDto = {
     {
       day: 4,
       expense: {
-        food: 40,
+        food: 4000,
         transport: 0,
-        entertainment: 30,
+        entertainment: 3000,
         housing: 0,
         health: 0,
         shopping: 0,
@@ -74,7 +74,7 @@ export const monthlyTransactionsExistingUser: MonthlyTransactionsResponseDto = {
         travel: 0,
         utilities: 0,
         other: 0,
-        total: 70,
+        total: 7000,
       },
       income: {
         total: 0,
@@ -83,8 +83,8 @@ export const monthlyTransactionsExistingUser: MonthlyTransactionsResponseDto = {
     {
       day: 5,
       expense: {
-        food: 25,
-        transport: 10,
+        food: 2500,
+        transport: 1000,
         entertainment: 0,
         housing: 0,
         health: 0,
@@ -93,7 +93,7 @@ export const monthlyTransactionsExistingUser: MonthlyTransactionsResponseDto = {
         travel: 0,
         utilities: 0,
         other: 0,
-        total: 35,
+        total: 3500,
       },
       income: {
         total: 0,
@@ -102,8 +102,8 @@ export const monthlyTransactionsExistingUser: MonthlyTransactionsResponseDto = {
     {
       day: 6,
       expense: {
-        food: 25,
-        transport: 10,
+        food: 2500,
+        transport: 1000,
         entertainment: 0,
         housing: 0,
         health: 0,
@@ -112,7 +112,7 @@ export const monthlyTransactionsExistingUser: MonthlyTransactionsResponseDto = {
         travel: 0,
         utilities: 0,
         other: 0,
-        total: 35,
+        total: 3500,
       },
       income: {
         total: 0,
@@ -121,17 +121,17 @@ export const monthlyTransactionsExistingUser: MonthlyTransactionsResponseDto = {
     {
       day: 7,
       expense: {
-        food: 25,
-        transport: 10,
+        food: 2500,
+        transport: 1000,
         entertainment: 0,
         housing: 0,
         health: 0,
-        shopping: 100,
+        shopping: 10000,
         education: 0,
         travel: 0,
         utilities: 0,
         other: 0,
-        total: 135,
+        total: 13500,
       },
       income: {
         total: 0,
@@ -140,8 +140,8 @@ export const monthlyTransactionsExistingUser: MonthlyTransactionsResponseDto = {
     {
       day: 8,
       expense: {
-        food: 25,
-        transport: 10,
+        food: 2500,
+        transport: 1000,
         entertainment: 0,
         housing: 0,
         health: 0,
@@ -150,7 +150,7 @@ export const monthlyTransactionsExistingUser: MonthlyTransactionsResponseDto = {
         travel: 0,
         utilities: 0,
         other: 0,
-        total: 35,
+        total: 3500,
       },
       income: {
         total: 0,
@@ -159,8 +159,8 @@ export const monthlyTransactionsExistingUser: MonthlyTransactionsResponseDto = {
     {
       day: 9,
       expense: {
-        food: 25,
-        transport: 10,
+        food: 2500,
+        transport: 1000,
         entertainment: 0,
         housing: 0,
         health: 0,
@@ -169,7 +169,7 @@ export const monthlyTransactionsExistingUser: MonthlyTransactionsResponseDto = {
         travel: 0,
         utilities: 0,
         other: 0,
-        total: 35,
+        total: 3500,
       },
       income: {
         total: 0,
@@ -178,9 +178,9 @@ export const monthlyTransactionsExistingUser: MonthlyTransactionsResponseDto = {
     {
       day: 10,
       expense: {
-        food: 40,
+        food: 4000,
         transport: 0,
-        entertainment: 30,
+        entertainment: 3000,
         housing: 0,
         health: 0,
         shopping: 0,
@@ -188,18 +188,18 @@ export const monthlyTransactionsExistingUser: MonthlyTransactionsResponseDto = {
         travel: 0,
         utilities: 0,
         other: 0,
-        total: 70,
+        total: 7000,
       },
       income: {
-        total: 5000,
+        total: 500000,
       },
     },
     {
       day: 11,
       expense: {
-        food: 40,
+        food: 4000,
         transport: 0,
-        entertainment: 30,
+        entertainment: 3000,
         housing: 0,
         health: 0,
         shopping: 0,
@@ -207,7 +207,7 @@ export const monthlyTransactionsExistingUser: MonthlyTransactionsResponseDto = {
         travel: 0,
         utilities: 0,
         other: 0,
-        total: 70,
+        total: 7000,
       },
       income: {
         total: 0,
@@ -216,8 +216,8 @@ export const monthlyTransactionsExistingUser: MonthlyTransactionsResponseDto = {
     {
       day: 12,
       expense: {
-        food: 25,
-        transport: 10,
+        food: 2500,
+        transport: 1000,
         entertainment: 0,
         housing: 0,
         health: 0,
@@ -226,7 +226,7 @@ export const monthlyTransactionsExistingUser: MonthlyTransactionsResponseDto = {
         travel: 0,
         utilities: 0,
         other: 0,
-        total: 35,
+        total: 3500,
       },
       income: {
         total: 0,
@@ -235,8 +235,8 @@ export const monthlyTransactionsExistingUser: MonthlyTransactionsResponseDto = {
     {
       day: 13,
       expense: {
-        food: 25,
-        transport: 10,
+        food: 2500,
+        transport: 1000,
         entertainment: 0,
         housing: 0,
         health: 0,
@@ -245,7 +245,7 @@ export const monthlyTransactionsExistingUser: MonthlyTransactionsResponseDto = {
         travel: 0,
         utilities: 0,
         other: 0,
-        total: 35,
+        total: 3500,
       },
       income: {
         total: 0,
@@ -254,17 +254,17 @@ export const monthlyTransactionsExistingUser: MonthlyTransactionsResponseDto = {
     {
       day: 14,
       expense: {
-        food: 25,
-        transport: 10,
+        food: 2500,
+        transport: 1000,
         entertainment: 0,
         housing: 0,
         health: 0,
-        shopping: 100,
+        shopping: 10000,
         education: 0,
         travel: 0,
         utilities: 0,
         other: 0,
-        total: 135,
+        total: 13500,
       },
       income: {
         total: 0,
@@ -273,17 +273,17 @@ export const monthlyTransactionsExistingUser: MonthlyTransactionsResponseDto = {
     {
       day: 15,
       expense: {
-        food: 25,
-        transport: 10,
+        food: 2500,
+        transport: 1000,
         entertainment: 0,
         housing: 0,
-        health: 150,
+        health: 15000,
         shopping: 0,
         education: 0,
         travel: 0,
         utilities: 0,
         other: 0,
-        total: 185,
+        total: 18500,
       },
       income: {
         total: 0,
@@ -292,8 +292,8 @@ export const monthlyTransactionsExistingUser: MonthlyTransactionsResponseDto = {
     {
       day: 16,
       expense: {
-        food: 25,
-        transport: 10,
+        food: 2500,
+        transport: 1000,
         entertainment: 0,
         housing: 0,
         health: 0,
@@ -302,7 +302,7 @@ export const monthlyTransactionsExistingUser: MonthlyTransactionsResponseDto = {
         travel: 0,
         utilities: 0,
         other: 0,
-        total: 35,
+        total: 3500,
       },
       income: {
         total: 0,
@@ -311,17 +311,17 @@ export const monthlyTransactionsExistingUser: MonthlyTransactionsResponseDto = {
     {
       day: 17,
       expense: {
-        food: 40,
+        food: 4000,
         transport: 0,
-        entertainment: 30,
+        entertainment: 3000,
         housing: 0,
         health: 0,
         shopping: 0,
         education: 0,
-        travel: 200,
+        travel: 20000,
         utilities: 0,
         other: 0,
-        total: 270,
+        total: 27000,
       },
       income: {
         total: 0,
@@ -330,9 +330,9 @@ export const monthlyTransactionsExistingUser: MonthlyTransactionsResponseDto = {
     {
       day: 18,
       expense: {
-        food: 40,
+        food: 4000,
         transport: 0,
-        entertainment: 30,
+        entertainment: 3000,
         housing: 0,
         health: 0,
         shopping: 0,
@@ -340,7 +340,7 @@ export const monthlyTransactionsExistingUser: MonthlyTransactionsResponseDto = {
         travel: 0,
         utilities: 0,
         other: 0,
-        total: 70,
+        total: 7000,
       },
       income: {
         total: 0,
@@ -349,8 +349,8 @@ export const monthlyTransactionsExistingUser: MonthlyTransactionsResponseDto = {
     {
       day: 19,
       expense: {
-        food: 25,
-        transport: 10,
+        food: 2500,
+        transport: 1000,
         entertainment: 0,
         housing: 0,
         health: 0,
@@ -359,7 +359,7 @@ export const monthlyTransactionsExistingUser: MonthlyTransactionsResponseDto = {
         travel: 0,
         utilities: 0,
         other: 0,
-        total: 35,
+        total: 3500,
       },
       income: {
         total: 0,
@@ -368,17 +368,17 @@ export const monthlyTransactionsExistingUser: MonthlyTransactionsResponseDto = {
     {
       day: 20,
       expense: {
-        food: 25,
-        transport: 10,
+        food: 2500,
+        transport: 1000,
         entertainment: 0,
         housing: 0,
         health: 0,
         shopping: 0,
-        education: 200,
+        education: 20000,
         travel: 0,
         utilities: 0,
         other: 0,
-        total: 235,
+        total: 23500,
       },
       income: {
         total: 0,
@@ -387,17 +387,17 @@ export const monthlyTransactionsExistingUser: MonthlyTransactionsResponseDto = {
     {
       day: 21,
       expense: {
-        food: 25,
-        transport: 10,
+        food: 2500,
+        transport: 1000,
         entertainment: 0,
         housing: 0,
         health: 0,
-        shopping: 100,
+        shopping: 10000,
         education: 0,
         travel: 0,
         utilities: 0,
         other: 0,
-        total: 135,
+        total: 13500,
       },
       income: {
         total: 0,
@@ -406,8 +406,8 @@ export const monthlyTransactionsExistingUser: MonthlyTransactionsResponseDto = {
     {
       day: 22,
       expense: {
-        food: 25,
-        transport: 10,
+        food: 2500,
+        transport: 1000,
         entertainment: 0,
         housing: 0,
         health: 0,
@@ -416,7 +416,7 @@ export const monthlyTransactionsExistingUser: MonthlyTransactionsResponseDto = {
         travel: 0,
         utilities: 0,
         other: 0,
-        total: 35,
+        total: 3500,
       },
       income: {
         total: 0,
@@ -425,8 +425,8 @@ export const monthlyTransactionsExistingUser: MonthlyTransactionsResponseDto = {
     {
       day: 23,
       expense: {
-        food: 25,
-        transport: 10,
+        food: 2500,
+        transport: 1000,
         entertainment: 0,
         housing: 0,
         health: 0,
@@ -435,7 +435,7 @@ export const monthlyTransactionsExistingUser: MonthlyTransactionsResponseDto = {
         travel: 0,
         utilities: 0,
         other: 0,
-        total: 35,
+        total: 3500,
       },
       income: {
         total: 0,
@@ -444,9 +444,9 @@ export const monthlyTransactionsExistingUser: MonthlyTransactionsResponseDto = {
     {
       day: 24,
       expense: {
-        food: 40,
+        food: 4000,
         transport: 0,
-        entertainment: 30,
+        entertainment: 3000,
         housing: 0,
         health: 0,
         shopping: 0,
@@ -454,7 +454,7 @@ export const monthlyTransactionsExistingUser: MonthlyTransactionsResponseDto = {
         travel: 0,
         utilities: 0,
         other: 0,
-        total: 70,
+        total: 7000,
       },
       income: {
         total: 0,
@@ -463,9 +463,9 @@ export const monthlyTransactionsExistingUser: MonthlyTransactionsResponseDto = {
     {
       day: 25,
       expense: {
-        food: 40,
+        food: 4000,
         transport: 0,
-        entertainment: 30,
+        entertainment: 3000,
         housing: 0,
         health: 0,
         shopping: 0,
@@ -473,7 +473,7 @@ export const monthlyTransactionsExistingUser: MonthlyTransactionsResponseDto = {
         travel: 0,
         utilities: 0,
         other: 0,
-        total: 70,
+        total: 7000,
       },
       income: {
         total: 0,
@@ -482,8 +482,8 @@ export const monthlyTransactionsExistingUser: MonthlyTransactionsResponseDto = {
     {
       day: 26,
       expense: {
-        food: 25,
-        transport: 10,
+        food: 2500,
+        transport: 1000,
         entertainment: 0,
         housing: 0,
         health: 0,
@@ -492,7 +492,7 @@ export const monthlyTransactionsExistingUser: MonthlyTransactionsResponseDto = {
         travel: 0,
         utilities: 0,
         other: 0,
-        total: 35,
+        total: 3500,
       },
       income: {
         total: 0,
@@ -501,8 +501,8 @@ export const monthlyTransactionsExistingUser: MonthlyTransactionsResponseDto = {
     {
       day: 27,
       expense: {
-        food: 25,
-        transport: 10,
+        food: 2500,
+        transport: 1000,
         entertainment: 0,
         housing: 0,
         health: 0,
@@ -511,7 +511,7 @@ export const monthlyTransactionsExistingUser: MonthlyTransactionsResponseDto = {
         travel: 0,
         utilities: 0,
         other: 0,
-        total: 35,
+        total: 3500,
       },
       income: {
         total: 0,
@@ -520,17 +520,17 @@ export const monthlyTransactionsExistingUser: MonthlyTransactionsResponseDto = {
     {
       day: 28,
       expense: {
-        food: 25,
-        transport: 10,
+        food: 2500,
+        transport: 1000,
         entertainment: 0,
         housing: 0,
         health: 0,
-        shopping: 100,
+        shopping: 10000,
         education: 0,
         travel: 0,
         utilities: 0,
         other: 0,
-        total: 135,
+        total: 13500,
       },
       income: {
         total: 0,
@@ -539,8 +539,8 @@ export const monthlyTransactionsExistingUser: MonthlyTransactionsResponseDto = {
     {
       day: 29,
       expense: {
-        food: 25,
-        transport: 10,
+        food: 2500,
+        transport: 1000,
         entertainment: 0,
         housing: 0,
         health: 0,
@@ -549,17 +549,17 @@ export const monthlyTransactionsExistingUser: MonthlyTransactionsResponseDto = {
         travel: 0,
         utilities: 0,
         other: 0,
-        total: 35,
+        total: 3500,
       },
       income: {
         total: 0,
       },
     },
     {
-      day: 30,
+      day: 3000,
       expense: {
-        food: 25,
-        transport: 10,
+        food: 2500,
+        transport: 1000,
         entertainment: 0,
         housing: 0,
         health: 0,
@@ -568,7 +568,7 @@ export const monthlyTransactionsExistingUser: MonthlyTransactionsResponseDto = {
         travel: 0,
         utilities: 0,
         other: 0,
-        total: 35,
+        total: 3500,
       },
       income: {
         total: 0,
@@ -577,9 +577,9 @@ export const monthlyTransactionsExistingUser: MonthlyTransactionsResponseDto = {
     {
       day: 31,
       expense: {
-        food: 40,
+        food: 4000,
         transport: 0,
-        entertainment: 30,
+        entertainment: 3000,
         housing: 0,
         health: 0,
         shopping: 0,
@@ -587,7 +587,7 @@ export const monthlyTransactionsExistingUser: MonthlyTransactionsResponseDto = {
         travel: 0,
         utilities: 0,
         other: 0,
-        total: 70,
+        total: 7000,
       },
       income: {
         total: 0,
