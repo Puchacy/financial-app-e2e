@@ -1,5 +1,5 @@
 import { test, expect } from "next/experimental/testmode/playwright/msw";
-import { UserToken } from "./constants/tokens";
+import { UserToken } from "./constants/user";
 import { handlers } from "./mocks/client";
 
 test.use({

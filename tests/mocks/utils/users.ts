@@ -1,4 +1,4 @@
-import { UserType, UserToken } from "../../constants/tokens";
+import { UserType, UserToken } from "../../constants/user";
 
 export const getUserFromRequest = (req: { headers: Headers }) => {
   const auth = req.headers.get("authorization");

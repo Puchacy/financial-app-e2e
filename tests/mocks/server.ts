@@ -3,7 +3,7 @@ import {
   getTransactionsHistoryResponse,
   getYearlyTransactionsResponse,
 } from "./utils/transactions";
-import { getUserFromRequest } from "./utils/getUserFromRequest";
+import { getUserFromRequest } from "./utils/users";
 
 type RequestInterceptorAPI = {
   onFetch: (

@@ -1,6 +1,6 @@
 export enum UserToken {
-  EXISTING_USER_TOKEN = "EXISTING_USER_TOKEN",
-  NEW_USER_TOKEN = "NEW_USER_TOKEN",
+  EXISTING_USER_TOKEN = "existingUserToken",
+  NEW_USER_TOKEN = "newUserToken",
 }
 
 export enum UserType {

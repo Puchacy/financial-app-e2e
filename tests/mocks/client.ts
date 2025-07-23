@@ -1,5 +1,5 @@
 import { http, HttpResponse } from "next/experimental/testmode/playwright/msw";
-import { getUserFromRequest } from "./utils/getUserFromRequest";
+import { getUserFromRequest } from "./utils/users";
 import {
   getMonthlyTransactionsResponse,
   getTransactionsHistoryResponse,
@@ -11,7 +11,7 @@ import {
   RegisterUserRequestDto,
   RegisterUserResponseDto,
 } from "../../api";
-import { UserToken } from "../constants/tokens";
+import { UserToken } from "../constants/user";
 
 export const handlers = [
   // GET /api/v1/users/me

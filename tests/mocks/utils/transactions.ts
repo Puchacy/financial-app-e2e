@@ -3,7 +3,7 @@ import {
   TransactionDtoPagedResult,
   YearlyTransactionsResponseDto,
 } from "../../../api";
-import { UserType } from "../../constants/tokens";
+import { UserType } from "../../constants/user";
 import {
   monthlyTransactionsExistingUser,
   monthlyTransactionsNewUser,
