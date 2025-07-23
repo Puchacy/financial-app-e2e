@@ -1,8 +1,12 @@
-import { test, expect } from "next/experimental/testmode/playwright";
-import { mockServerTransactions } from "./mocks/server";
+import { test, expect } from "next/experimental/testmode/playwright/msw";
 import { UserToken } from "./constants/tokens";
+import { handlers } from "./mocks/client";
 
-test("SSR", async ({ page, next }) => {
+test.use({
+  mswHandlers: [handlers, { scope: "test" }],
+});
+
+test("SSR", async ({ page }) => {
   await page.context().addCookies([
     {
       name: "auth_token",
@@ -15,8 +19,7 @@ test("SSR", async ({ page, next }) => {
     },
   ]);
 
-  mockServerTransactions(next);
-
   await page.goto("http://localhost:3000/dashboard");
-  expect(true).toBe(true);
+
+  await expect(page.getByTestId("bar-chart-bar").first()).toBeVisible();
 });

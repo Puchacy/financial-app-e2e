@@ -1,4 +1,4 @@
-import { test, expect } from "./playwright.setup";
+import { test, expect } from "next/experimental/testmode/playwright/msw";
 import { testimonials } from "./data/testimonials";
 import { features } from "./data/features";
 
@@ -7,8 +7,9 @@ test.describe("Home Page", () => {
     await page.goto("http://localhost:3000");
 
     // Header
-    await expect(page.getByTestId("app-logo")).toBeVisible();
-    await expect(page.getByTestId("app-title")).toBeVisible();
+    await expect(page.getByTestId("header-logo")).toBeVisible();
+    await expect(page.getByTestId("header-title")).toBeVisible();
+    await expect(page.getByTestId("header-title")).toHaveText("MojeFinanse");
     await expect(
       page.getByRole("button", { name: "Zaloguj się" })
     ).toBeVisible();
@@ -27,8 +28,8 @@ test.describe("Home Page", () => {
     ).toBeVisible();
 
     // Feature tiles
-    for (const { title, text, testId } of features) {
-      await expect(page.getByTestId(testId)).toBeVisible();
+    for (const { title, text, dataTestId } of features) {
+      await expect(page.getByTestId(dataTestId)).toBeVisible();
       await expect(
         page.getByRole("heading", { name: title, level: 3 })
       ).toBeVisible();
@@ -43,7 +44,7 @@ test.describe("Home Page", () => {
     for (const { name, content } of testimonials) {
       await expect(
         page
-          .locator(`[data-testid="${name}Avatar"]`)
+          .locator(`[data-testid="home-page-${name}-avatar"]`)
           .filter({ has: page.locator(":visible") })
           .first()
       ).toBeVisible();
