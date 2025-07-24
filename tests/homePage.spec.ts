@@ -4,7 +4,7 @@ import { features } from "./data/features";
 
 test.describe("Home Page", () => {
   test("displays header, footer and the page content", async ({ page }) => {
-    await page.goto("http://localhost:3000");
+    await page.goto("/");
 
     // Header
     await expect(page.getByTestId("header-logo")).toBeVisible();

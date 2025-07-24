@@ -8,7 +8,7 @@ test.use({
 
 test.describe("Header – unauthenticated user", () => {
   test("shows app logo and name", async ({ page }) => {
-    await page.goto("http://localhost:3000");
+    await page.goto("/");
 
     await expect(page.getByTestId("header-logo")).toBeVisible();
     await expect(page.getByTestId("header-title")).toBeVisible();
@@ -16,7 +16,7 @@ test.describe("Header – unauthenticated user", () => {
   });
 
   test("shows login button", async ({ page }) => {
-    await page.goto("http://localhost:3000");
+    await page.goto("/");
 
     await expect(
       page.getByRole("button", { name: "Zaloguj się" })
@@ -24,7 +24,7 @@ test.describe("Header – unauthenticated user", () => {
   });
 
   test("shows login form", async ({ page }) => {
-    await page.goto("http://localhost:3000");
+    await page.goto("/");
     await page.getByRole("button", { name: "Zaloguj się" }).click();
 
     await expect(page.getByTestId("auth-modal")).toBeVisible();
@@ -44,7 +44,7 @@ test.describe("Header – unauthenticated user", () => {
   });
 
   test("shows register form", async ({ page }) => {
-    await page.goto("http://localhost:3000");
+    await page.goto("/");
     await page.getByRole("button", { name: "Zaloguj się" }).click();
     await page.getByTestId("auth-modal-mode-button").click();
 
@@ -83,7 +83,7 @@ test.describe("Header – authenticated user", () => {
   });
 
   test("shows avatar and greeting", async ({ page }) => {
-    await page.goto("http://localhost:3000");
+    await page.goto("/");
 
     const avatar = page.getByTestId("header-circle-icon");
     await expect(avatar).toBeVisible();
@@ -116,27 +116,27 @@ test.describe("Header – authenticated user", () => {
   test("navigates to homepage when clicking 'Strona główna'", async ({
     page,
   }) => {
-    await page.goto("http://localhost:3000/dashboard");
+    await page.goto("/dashboard");
 
     await page.getByTestId("header-circle-icon").click();
     await page.getByTestId("menu-item-home-page").click();
 
-    await expect(page).toHaveURL("http://localhost:3000/");
+    await expect(page).toHaveURL("/");
   });
 
   test("navigates to dashboard when clicking 'Mój panel'", async ({ page }) => {
-    await page.goto("http://localhost:3000");
+    await page.goto("/");
 
     await page.getByTestId("header-circle-icon").click();
     await page.getByTestId("menu-item-dashboard").click();
 
-    await expect(page).toHaveURL("http://localhost:3000/dashboard");
+    await expect(page).toHaveURL("/dashboard");
   });
 
   test("shows logout confirmation modal when clicking 'Wyloguj się'", async ({
     page,
   }) => {
-    await page.goto("http://localhost:3000");
+    await page.goto("/");
 
     await page.getByTestId("header-circle-icon").click();
     await page.getByTestId("menu-item-logout").click();
@@ -150,18 +150,18 @@ test.describe("Header – authenticated user", () => {
   });
 
   test("clicking logo redirects to homepage", async ({ page }) => {
-    await page.goto("http://localhost:3000/dashboard");
+    await page.goto("/dashboard");
 
     await page.getByTestId("header-logo").click();
 
-    await expect(page).toHaveURL("http://localhost:3000/");
+    await expect(page).toHaveURL("/");
   });
 
   test("clicking app title redirects to homepage", async ({ page }) => {
-    await page.goto("http://localhost:3000/dashboard");
+    await page.goto("/dashboard");
 
     await page.getByTestId("header-title").click();
 
-    await expect(page).toHaveURL("http://localhost:3000/");
+    await expect(page).toHaveURL("/");
   });
 });

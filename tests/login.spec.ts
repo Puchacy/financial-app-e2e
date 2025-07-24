@@ -8,7 +8,7 @@ test.use({
 
 test.describe("AuthModal – Login", () => {
   test.beforeEach(async ({ page }) => {
-    await page.goto("http://localhost:3000");
+    await page.goto("/");
     await page.getByRole("button", { name: "Zaloguj się" }).click();
 
     await expect(page.getByTestId("auth-modal")).toBeVisible();
@@ -17,9 +17,11 @@ test.describe("AuthModal – Login", () => {
   test("should redirect to home page when accessing dashboard unauthenticated", async ({
     page,
   }) => {
-    await page.goto("http://localhost:3000/dashboard");
+    await page.goto("/dashboard", {
+      waitUntil: "domcontentloaded",
+    });
 
-    await expect(page).toHaveURL("http://localhost:3000/");
+    await expect(page).toHaveURL("/");
   });
 
   test("should log in successfully", async ({ page }) => {
@@ -33,7 +35,8 @@ test.describe("AuthModal – Login", () => {
     await page.getByTestId("auth-modal-submit-button").click();
 
     await expect(page.getByTestId("auth-modal")).toBeHidden();
-    await expect(page).toHaveURL("http://localhost:3000/dashboard");
+
+    await expect(page).toHaveURL("/dashboard");
   });
 
   test("should show error on invalid credentials", async ({ page }) => {
