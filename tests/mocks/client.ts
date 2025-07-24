@@ -1,27 +1,24 @@
 import { http, HttpResponse } from "next/experimental/testmode/playwright/msw";
-import { getLoginUserResponse, getUserFromRequest } from "./utils/users";
+import {
+  getLoginUserResponse,
+  getRegisterUserResponse,
+  getUserFromRequest,
+  getUserMeResponse,
+} from "./utils/users";
 import {
   getMonthlyTransactionsResponse,
   getTransactionsHistoryResponse,
   getYearlyTransactionsResponse,
 } from "./utils/transactions";
-import {
-  LoginUserRequestDto,
-  RegisterUserRequestDto,
-  RegisterUserResponseDto,
-} from "../../api";
-import { UserToken } from "../constants/user";
+import { LoginUserRequestDto, RegisterUserRequestDto } from "../../api";
 import { API_BASE_URL } from "./constants/api";
 
 export const handlers = [
   // GET /api/v1/users/me
-  http.get(`${API_BASE_URL}/api/v1/users/me`, () => {
-    return HttpResponse.json({
-      id: 1,
-      name: "Jan",
-      surname: "Kowalski",
-      email: "jan.kowalski@example.com",
-    });
+  http.get(`${API_BASE_URL}/api/v1/users/me`, ({ request }) => {
+    const user = getUserFromRequest(request);
+
+    return getUserMeResponse(user);
   }),
 
   // GET /api/v1/transactions
@@ -68,29 +65,15 @@ export const handlers = [
 
   // POST /api/v1/users/login
   http.post(`${API_BASE_URL}/api/v1/users/login`, async ({ request }) => {
-    const credentials = (await request.json()) as LoginUserRequestDto;
+    const body = (await request.json()) as LoginUserRequestDto;
 
-    return getLoginUserResponse(credentials);
+    return getLoginUserResponse(body);
   }),
 
   // POST /api/v1/users/register
   http.post(`${API_BASE_URL}/api/v1/users/register`, async ({ request }) => {
     const body = (await request.json()) as RegisterUserRequestDto;
 
-    if (!body.email || !body.password || !body.name || !body.surname) {
-      return HttpResponse.json({ error: "Invalid input" }, { status: 400 });
-    }
-
-    const response: RegisterUserResponseDto = {
-      token: UserToken.NEW_USER_TOKEN,
-      user: {
-        id: 2,
-        name: body.name,
-        surname: body.surname,
-        email: body.email,
-      },
-    };
-
-    return HttpResponse.json(response);
+    return getRegisterUserResponse(body);
   }),
 ];

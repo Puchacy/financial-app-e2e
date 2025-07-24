@@ -7,17 +7,12 @@ test.use({
 });
 
 test.describe("Header – unauthenticated user", () => {
-  test("shows app logo and name", async ({ page }) => {
+  test("shows app logo, title and login button", async ({ page }) => {
     await page.goto("/");
 
     await expect(page.getByTestId("header-logo")).toBeVisible();
     await expect(page.getByTestId("header-title")).toBeVisible();
     await expect(page.getByTestId("header-title")).toHaveText("MojeFinanse");
-  });
-
-  test("shows login button", async ({ page }) => {
-    await page.goto("/");
-
     await expect(
       page.getByRole("button", { name: "Zaloguj się" })
     ).toBeVisible();

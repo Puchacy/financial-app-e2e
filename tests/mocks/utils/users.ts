@@ -1,10 +1,17 @@
 import { HttpResponse } from "next/experimental/testmode/playwright/msw";
-import { LoginUserRequestDto, LoginUserResponseDto } from "../../../api";
+import {
+  LoginUserRequestDto,
+  LoginUserResponseDto,
+  RegisterUserRequestDto,
+  RegisterUserResponseDto,
+} from "../../../api";
 import {
   UserType,
   UserToken,
   existingUserCredentials,
   existingUser,
+  newUserCredentials,
+  newUser,
 } from "../../constants/user";
 
 export const getUserFromRequest = (req: { headers: Headers }) => {
@@ -17,6 +24,22 @@ export const getUserFromRequest = (req: { headers: Headers }) => {
       return UserType.NEW_USER;
     default:
       return null;
+  }
+};
+
+export const getUserMeResponse = (user: UserType | null) => {
+  switch (user) {
+    case UserType.EXISTING_USER:
+      return HttpResponse.json(existingUser);
+    case UserType.NEW_USER:
+      return HttpResponse.json(newUser);
+    default:
+      return HttpResponse.json(
+        {
+          error: "User unauthorized",
+        },
+        { status: 401 }
+      );
   }
 };
 
@@ -47,8 +70,47 @@ export const getLoginUserResponse = ({
 
   return HttpResponse.json(
     {
-      error: "Nieprawidłowe dane. Sprawdź email lub hasło i spróbuj ponownie",
+      error: "Invalid email or password.",
     },
     { status: 401 }
+  );
+};
+
+export const getRegisterUserResponse = ({
+  name,
+  surname,
+  email,
+  password,
+}: RegisterUserRequestDto): HttpResponse<
+  RegisterUserResponseDto | { error: string }
+> => {
+  if (
+    name === newUserCredentials.name &&
+    surname === newUserCredentials.surname &&
+    email === newUserCredentials.email &&
+    password === newUserCredentials.password
+  ) {
+    const response: RegisterUserResponseDto = {
+      token: UserToken.NEW_USER_TOKEN,
+      user: newUser,
+    };
+
+    return HttpResponse.json(response);
+  }
+
+  if (email === existingUser.email) {
+    return HttpResponse.json(
+      {
+        error: `Email: ${existingUser.email} already registered.`,
+      },
+      { status: 400 }
+    );
+  }
+
+  return HttpResponse.json(
+    {
+      error: "Internal Server Error",
+    },
+    { status: 500 }
   );
 };

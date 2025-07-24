@@ -1,4 +1,8 @@
-import { LoginUserRequestDto, UserDTO } from "../../api";
+import {
+  LoginUserRequestDto,
+  RegisterUserRequestDto,
+  UserDTO,
+} from "../../api";
 
 export enum UserToken {
   EXISTING_USER_TOKEN = "existingUserToken",
@@ -19,5 +23,19 @@ export const existingUser: UserDTO = {
 
 export const existingUserCredentials: LoginUserRequestDto = {
   email: existingUser.email,
+  password: "password123",
+};
+
+export const newUser: UserDTO = {
+  id: 2,
+  name: "Adam",
+  surname: "Nowak",
+  email: "new@example.com",
+};
+
+export const newUserCredentials: RegisterUserRequestDto = {
+  name: newUser.name,
+  surname: newUser.surname,
+  email: newUser.email,
   password: "password123",
 };
