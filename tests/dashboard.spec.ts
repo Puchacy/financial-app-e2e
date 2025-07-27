@@ -5,7 +5,8 @@ import { categoryLabels } from "./constants/transaction";
 import dayjs from "dayjs";
 import "dayjs/locale/pl";
 import { monthlyTransactionsExistingUser } from "./mocks/data/monthlyTransactions";
-import { ExpenseSummaryDto, TransactionCategory } from "../api";
+import { TransactionType } from "../api";
+import { getChartData, getExpenseDetailsModalData } from "./utils/chart";
 
 dayjs.locale("pl");
 
@@ -158,6 +159,11 @@ test.describe("Dashboard - existing user", () => {
   });
 
   test("shows monthly transaction chart for expenses", async ({ page }) => {
+    const { barsCount, clickedBarIndex, tooltip } = getChartData(
+      monthlyTransactionsExistingUser,
+      TransactionType.EXPENSE
+    );
+
     await expect(page.getByTestId("monthly-chart-container")).toBeVisible();
 
     const previousButton = page
@@ -175,49 +181,46 @@ test.describe("Dashboard - existing user", () => {
     await expect(nextButton).toBeDisabled();
 
     const chartBars = page.getByTestId("monthly-chart-bar");
-    await expect(chartBars).toHaveCount(
-      monthlyTransactionsExistingUser.transactions?.length || 0
-    );
+    await expect(chartBars).toHaveCount(barsCount);
 
-    const clickedChartBarIndex = 0;
-    await chartBars.nth(clickedChartBarIndex).click();
+    await chartBars.nth(clickedBarIndex).click();
     await expect(page.getByTestId("expense-details-modal")).toBeVisible();
 
     await page.keyboard.press("Escape");
 
-    await chartBars.nth(clickedChartBarIndex).hover();
+    await chartBars.nth(clickedBarIndex).hover();
     await expect(page.getByTestId("bar-chart-tooltip")).toBeVisible();
 
-    const selectedDay =
-      monthlyTransactionsExistingUser.transactions?.[clickedChartBarIndex]
-        .day || 0;
     const barChartTooltipFirstText = page.getByTestId(
       "bar-chart-tooltip-first-text"
     );
     await expect(barChartTooltipFirstText).toBeVisible();
-    await expect(barChartTooltipFirstText).toHaveText(`Dzień: ${selectedDay}`);
+    await expect(barChartTooltipFirstText).toHaveText(tooltip.firstText);
 
     const barChartTooltipSecondText = page.getByTestId(
       "bar-chart-tooltip-second-text"
     );
     await expect(barChartTooltipSecondText).toBeVisible();
-    await expect(barChartTooltipSecondText).toHaveText(
-      `Wydatki: ${(
-        (monthlyTransactionsExistingUser.transactions?.[clickedChartBarIndex]
-          .expense?.total || 0) / 100
-      ).toFixed(2)} zł`
-    );
+    await expect(barChartTooltipSecondText).toHaveText(tooltip.secondText);
   });
 
   test("shows expense details modal for monthly transaction chart", async ({
     page,
   }) => {
+    const {
+      cellsCount,
+      clickedBarIndex,
+      selectedDay,
+      tooltip,
+      hoverCellIndex,
+      formattedCategoryLabels,
+      summaryText,
+    } = getExpenseDetailsModalData(monthlyTransactionsExistingUser);
+
     const chartBars = page.getByTestId("monthly-chart-bar");
+    await expect(chartBars.nth(clickedBarIndex)).toBeVisible();
 
-    const clickedChartBarIndex = 0;
-    await expect(chartBars.nth(clickedChartBarIndex)).toBeVisible();
-
-    await chartBars.nth(clickedChartBarIndex).click();
+    await chartBars.nth(clickedBarIndex).click();
 
     const expenseDetailsModal = page.getByTestId("expense-details-modal");
     await expect(expenseDetailsModal).toBeVisible();
@@ -226,9 +229,6 @@ test.describe("Dashboard - existing user", () => {
     await expect(modalTitle).toBeVisible();
     await expect(modalTitle).toHaveText("Podsumowanie wydatków");
 
-    const selectedDay =
-      monthlyTransactionsExistingUser.transactions?.[clickedChartBarIndex]
-        .day || 0;
     const modalSubtitle = page.getByTestId("expense-details-modal-subtitle");
     await expect(modalSubtitle).toBeVisible();
     await expect(modalSubtitle).toHaveText(
@@ -242,80 +242,44 @@ test.describe("Dashboard - existing user", () => {
       page.getByTestId("expense-details-modal-pie-chart")
     ).toBeVisible();
 
-    const nonZeroExpenseCategoriesCount = Object.entries(
-      monthlyTransactionsExistingUser.transactions?.[clickedChartBarIndex]
-        .expense ?? {}
-    ).filter(([key, value]) => key !== "total" && value > 0).length;
-
     const pieChartCells = page.getByTestId(
       "expense-details-modal-pie-chart-cell"
     );
-    await expect(pieChartCells).toHaveCount(nonZeroExpenseCategoriesCount);
+    await expect(pieChartCells).toHaveCount(cellsCount);
 
-    await pieChartCells.nth(2).hover();
+    await pieChartCells.nth(hoverCellIndex).hover();
     await expect(page.getByTestId("pie-chart-tooltip")).toBeVisible();
 
     const pieChartTooltipFirstText = page.getByTestId(
       "pie-chart-tooltip-first-text"
     );
     await expect(pieChartTooltipFirstText).toBeVisible();
-    await expect(pieChartTooltipFirstText).toHaveText(
-      `Kategoria: ${categoryLabels.Housing}`
-    );
+    await expect(pieChartTooltipFirstText).toHaveText(tooltip.firstText);
 
     const pieChartTooltipSecondText = page.getByTestId(
       "pie-chart-tooltip-second-text"
     );
     await expect(pieChartTooltipSecondText).toBeVisible();
 
-    await expect(pieChartTooltipSecondText).toHaveText(
-      `Kwota: ${(
-        (monthlyTransactionsExistingUser.transactions?.[clickedChartBarIndex]
-          .expense?.[
-          TransactionCategory.HOUSING.toLowerCase() as keyof ExpenseSummaryDto
-        ] || 0) / 100
-      ).toFixed(2)} zł`
-    );
+    await expect(pieChartTooltipSecondText).toHaveText(tooltip.secondText);
 
     await expect(
       page.getByTestId("expense-details-modal-category-labels-container")
     ).toBeVisible();
     await expect(
       page.getByTestId("expense-details-modal-category-label")
-    ).toHaveCount(nonZeroExpenseCategoriesCount);
+    ).toHaveCount(cellsCount);
     await expect(
       page.getByTestId("expense-details-modal-category-label-icon")
-    ).toHaveCount(nonZeroExpenseCategoriesCount);
+    ).toHaveCount(cellsCount);
 
     const categorLabelTexts = page.getByTestId(
       "expense-details-modal-category-label-text"
     );
 
-    const sortedNonZeroCategories = Object.entries(
-      monthlyTransactionsExistingUser.transactions?.[clickedChartBarIndex]
-        .expense ?? {}
-    )
-      .filter(([key, value]) => key !== "total" && value > 0)
-      .sort(([, a], [, b]) => b - a);
-
-    const totalValue =
-      monthlyTransactionsExistingUser.transactions?.[clickedChartBarIndex]
-        .expense?.total || 0;
-
-    for (let i = 0; i < sortedNonZeroCategories.length; i++) {
-      const [categoryKey, value] = sortedNonZeroCategories[i];
-
-      const text =
-        categoryLabels[
-          TransactionCategory[
-            categoryKey.toUpperCase() as keyof typeof TransactionCategory
-          ]
-        ];
-      const amount = (value / 100).toFixed(2);
-      const percentage = Math.round((value / totalValue) * 100);
-
+    for (let i = 0; i < formattedCategoryLabels.length; i++) {
       await expect(categorLabelTexts.nth(i)).toHaveText(
-        `${text}: ${amount} zł (${percentage}%)`
+        formattedCategoryLabels[i]
       );
     }
 
@@ -327,9 +291,7 @@ test.describe("Dashboard - existing user", () => {
       "expense-details-modal-category-label-summary"
     );
     await expect(summary).toBeVisible();
-    await expect(summary).toHaveText(
-      `Suma: ${(totalValue / 100).toFixed(2)} zł`
-    );
+    await expect(summary).toHaveText(summaryText);
 
     const closeIcon = page.getByTestId("expense-details-modal-close-icon");
     await expect(closeIcon).toBeVisible();
@@ -337,5 +299,54 @@ test.describe("Dashboard - existing user", () => {
     await closeIcon.click();
 
     await expect(expenseDetailsModal).not.toBeVisible();
+  });
+
+  test("shows monthly transaction chart for incomes", async ({ page }) => {
+    const { barsCount, clickedBarIndex, tooltip } = getChartData(
+      monthlyTransactionsExistingUser,
+      TransactionType.INCOME
+    );
+
+    const incomeButton = page.getByTestId("transaction-type-income-button");
+    await expect(incomeButton).toBeVisible();
+
+    await incomeButton.click();
+
+    await expect(page.getByTestId("monthly-chart-container")).toBeVisible();
+
+    const previousButton = page
+      .getByTestId("chart-header-previous-button")
+      .nth(0);
+    await expect(previousButton).toBeVisible();
+    await expect(previousButton).toBeEnabled();
+
+    const title = page.getByTestId("chart-header-title").nth(0);
+    await expect(title).toBeVisible();
+    await expect(title).toHaveText(dayjs().format("MMMM YYYY"));
+
+    const nextButton = page.getByTestId("chart-header-next-button").nth(0);
+    await expect(nextButton).toBeVisible();
+    await expect(nextButton).toBeDisabled();
+
+    const chartBars = page.getByTestId("monthly-chart-bar");
+    await expect(chartBars).toHaveCount(barsCount);
+
+    await chartBars.nth(clickedBarIndex).click();
+    await expect(page.getByTestId("expense-details-modal")).not.toBeVisible();
+
+    await chartBars.nth(clickedBarIndex).hover();
+    await expect(page.getByTestId("bar-chart-tooltip")).toBeVisible();
+
+    const barChartTooltipFirstText = page.getByTestId(
+      "bar-chart-tooltip-first-text"
+    );
+    await expect(barChartTooltipFirstText).toBeVisible();
+    await expect(barChartTooltipFirstText).toHaveText(tooltip.firstText);
+
+    const barChartTooltipSecondText = page.getByTestId(
+      "bar-chart-tooltip-second-text"
+    );
+    await expect(barChartTooltipSecondText).toBeVisible();
+    await expect(barChartTooltipSecondText).toHaveText(tooltip.secondText);
   });
 });
