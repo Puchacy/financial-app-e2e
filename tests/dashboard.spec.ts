@@ -1,10 +1,11 @@
+import dayjs from "dayjs";
+import "dayjs/locale/pl";
 import { test, expect } from "next/experimental/testmode/playwright/msw";
 import { handlers } from "./mocks/client";
 import { existingUser, UserToken } from "./constants/user";
 import { categoryLabels } from "./constants/transaction";
-import dayjs from "dayjs";
-import "dayjs/locale/pl";
 import { monthlyTransactionsExistingUser } from "./mocks/data/monthlyTransactions";
+import { yearlyTransactionsExistingUser } from "./mocks/data/yearlyTransactions";
 import { TransactionType } from "../api";
 import { getChartData, getExpenseDetailsModalData } from "./utils/chart";
 
@@ -158,7 +159,7 @@ test.describe("Dashboard - existing user", () => {
     await expect(incomeButton).toContainText("Wpływy");
   });
 
-  test("shows monthly transaction chart for expenses", async ({ page }) => {
+  test("shows monthly transactions chart for expenses", async ({ page }) => {
     const { barsCount, clickedBarIndex, tooltip } = getChartData(
       monthlyTransactionsExistingUser,
       TransactionType.EXPENSE
@@ -204,7 +205,7 @@ test.describe("Dashboard - existing user", () => {
     await expect(barChartTooltipSecondText).toHaveText(tooltip.secondText);
   });
 
-  test("shows expense details modal for monthly transaction chart", async ({
+  test("shows expense details modal for monthly transactions chart", async ({
     page,
   }) => {
     const {
@@ -301,7 +302,7 @@ test.describe("Dashboard - existing user", () => {
     await expect(expenseDetailsModal).not.toBeVisible();
   });
 
-  test("shows monthly transaction chart for incomes", async ({ page }) => {
+  test("shows monthly transactions chart for incomes", async ({ page }) => {
     const { barsCount, clickedBarIndex, tooltip } = getChartData(
       monthlyTransactionsExistingUser,
       TransactionType.INCOME
@@ -329,6 +330,200 @@ test.describe("Dashboard - existing user", () => {
     await expect(nextButton).toBeDisabled();
 
     const chartBars = page.getByTestId("monthly-chart-bar");
+    await expect(chartBars).toHaveCount(barsCount);
+
+    await chartBars.nth(clickedBarIndex).click();
+    await expect(page.getByTestId("expense-details-modal")).not.toBeVisible();
+
+    await chartBars.nth(clickedBarIndex).hover();
+    await expect(page.getByTestId("bar-chart-tooltip")).toBeVisible();
+
+    const barChartTooltipFirstText = page.getByTestId(
+      "bar-chart-tooltip-first-text"
+    );
+    await expect(barChartTooltipFirstText).toBeVisible();
+    await expect(barChartTooltipFirstText).toHaveText(tooltip.firstText);
+
+    const barChartTooltipSecondText = page.getByTestId(
+      "bar-chart-tooltip-second-text"
+    );
+    await expect(barChartTooltipSecondText).toBeVisible();
+    await expect(barChartTooltipSecondText).toHaveText(tooltip.secondText);
+  });
+
+  test("shows yearly transactions chart for expenses", async ({ page }) => {
+    const { barsCount, clickedBarIndex, tooltip } = getChartData(
+      yearlyTransactionsExistingUser,
+      TransactionType.EXPENSE
+    );
+
+    await expect(page.getByTestId("yearly-chart-container")).toBeVisible();
+
+    const previousButton = page
+      .getByTestId("chart-header-previous-button")
+      .nth(1);
+    await expect(previousButton).toBeVisible();
+    await expect(previousButton).toBeEnabled();
+
+    const title = page.getByTestId("chart-header-title").nth(1);
+    await expect(title).toBeVisible();
+    await expect(title).toHaveText(dayjs().format("YYYY"));
+
+    const nextButton = page.getByTestId("chart-header-next-button").nth(1);
+    await expect(nextButton).toBeVisible();
+    await expect(nextButton).toBeDisabled();
+
+    const chartBars = page.getByTestId("yearly-chart-bar");
+    await expect(chartBars).toHaveCount(barsCount);
+
+    await chartBars.nth(clickedBarIndex).click();
+    await expect(page.getByTestId("expense-details-modal")).toBeVisible();
+
+    await page.keyboard.press("Escape");
+
+    await chartBars.nth(clickedBarIndex).hover();
+    await expect(page.getByTestId("bar-chart-tooltip")).toBeVisible();
+
+    const barChartTooltipFirstText = page.getByTestId(
+      "bar-chart-tooltip-first-text"
+    );
+    await expect(barChartTooltipFirstText).toBeVisible();
+    await expect(barChartTooltipFirstText).toHaveText(tooltip.firstText);
+
+    const barChartTooltipSecondText = page.getByTestId(
+      "bar-chart-tooltip-second-text"
+    );
+    await expect(barChartTooltipSecondText).toBeVisible();
+    await expect(barChartTooltipSecondText).toHaveText(tooltip.secondText);
+  });
+
+  test("shows expense details modal for yearly transactions chart", async ({
+    page,
+  }) => {
+    const {
+      cellsCount,
+      clickedBarIndex,
+      selectedMonth,
+      tooltip,
+      hoverCellIndex,
+      formattedCategoryLabels,
+      summaryText,
+    } = getExpenseDetailsModalData(yearlyTransactionsExistingUser);
+
+    const chartBars = page.getByTestId("yearly-chart-bar");
+    await expect(chartBars.nth(clickedBarIndex)).toBeVisible();
+
+    await chartBars.nth(clickedBarIndex).click();
+
+    const expenseDetailsModal = page.getByTestId("expense-details-modal");
+    await expect(expenseDetailsModal).toBeVisible();
+
+    const modalTitle = page.getByTestId("expense-details-modal-title");
+    await expect(modalTitle).toBeVisible();
+    await expect(modalTitle).toHaveText("Podsumowanie wydatków");
+
+    const modalSubtitle = page.getByTestId("expense-details-modal-subtitle");
+    await expect(modalSubtitle).toBeVisible();
+    await expect(modalSubtitle).toHaveText(
+      dayjs()
+        .month(selectedMonth - 1)
+        .format("MMMM YYYY")
+    );
+
+    await expect(
+      page.getByTestId("expense-details-modal-close-icon")
+    ).toBeVisible();
+    await expect(
+      page.getByTestId("expense-details-modal-pie-chart")
+    ).toBeVisible();
+
+    const pieChartCells = page.getByTestId(
+      "expense-details-modal-pie-chart-cell"
+    );
+    await expect(pieChartCells).toHaveCount(cellsCount);
+
+    await pieChartCells.nth(hoverCellIndex).hover();
+    await expect(page.getByTestId("pie-chart-tooltip")).toBeVisible();
+
+    const pieChartTooltipFirstText = page.getByTestId(
+      "pie-chart-tooltip-first-text"
+    );
+    await expect(pieChartTooltipFirstText).toBeVisible();
+    await expect(pieChartTooltipFirstText).toHaveText(tooltip.firstText);
+
+    const pieChartTooltipSecondText = page.getByTestId(
+      "pie-chart-tooltip-second-text"
+    );
+    await expect(pieChartTooltipSecondText).toBeVisible();
+
+    await expect(pieChartTooltipSecondText).toHaveText(tooltip.secondText);
+
+    await expect(
+      page.getByTestId("expense-details-modal-category-labels-container")
+    ).toBeVisible();
+    await expect(
+      page.getByTestId("expense-details-modal-category-label")
+    ).toHaveCount(cellsCount);
+    await expect(
+      page.getByTestId("expense-details-modal-category-label-icon")
+    ).toHaveCount(cellsCount);
+
+    const categorLabelTexts = page.getByTestId(
+      "expense-details-modal-category-label-text"
+    );
+
+    for (let i = 0; i < formattedCategoryLabels.length; i++) {
+      await expect(categorLabelTexts.nth(i)).toHaveText(
+        formattedCategoryLabels[i]
+      );
+    }
+
+    await expect(
+      page.getByTestId("expense-details-modal-category-label-divider")
+    ).toBeVisible();
+
+    const summary = page.getByTestId(
+      "expense-details-modal-category-label-summary"
+    );
+    await expect(summary).toBeVisible();
+    await expect(summary).toHaveText(summaryText);
+
+    const closeIcon = page.getByTestId("expense-details-modal-close-icon");
+    await expect(closeIcon).toBeVisible();
+
+    await closeIcon.click();
+
+    await expect(expenseDetailsModal).not.toBeVisible();
+  });
+
+  test("shows yearly transactions chart for incomes", async ({ page }) => {
+    const { barsCount, clickedBarIndex, tooltip } = getChartData(
+      yearlyTransactionsExistingUser,
+      TransactionType.INCOME
+    );
+
+    const incomeButton = page.getByTestId("transaction-type-income-button");
+    await expect(incomeButton).toBeVisible();
+
+    await incomeButton.click();
+
+    await expect(page.getByTestId("yearly-chart-container")).toBeVisible();
+
+    const previousButton = page
+      .getByTestId("chart-header-previous-button")
+      .nth(1);
+    await expect(previousButton).toBeVisible();
+    await expect(previousButton).toBeEnabled();
+
+    const title = page.getByTestId("chart-header-title").nth(1);
+    await expect(title).toBeVisible();
+    await expect(title).toHaveText(dayjs().format("YYYY"));
+
+    const nextButton = page.getByTestId("chart-header-next-button").nth(1);
+    await expect(nextButton).toBeVisible();
+    await expect(nextButton).toBeDisabled();
+
+    const chartBars = page.getByTestId("yearly-chart-bar");
     await expect(chartBars).toHaveCount(barsCount);
 
     await chartBars.nth(clickedBarIndex).click();

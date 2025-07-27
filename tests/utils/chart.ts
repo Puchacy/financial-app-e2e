@@ -1,3 +1,5 @@
+import dayjs from "dayjs";
+import "dayjs/locale/pl";
 import {
   ExpenseSummaryDto,
   MonthlyTransactionsResponseDto,
@@ -6,6 +8,8 @@ import {
   YearlyTransactionsResponseDto,
 } from "../../api";
 import { categoryLabels } from "../constants/transaction";
+
+dayjs.locale("pl");
 
 type TransactionKey = "income" | "expense";
 
@@ -40,7 +44,19 @@ export const getChartData = (
     ? data.transactions?.[firstNonZeroDataIndex].day || 0
     : 0;
 
-  const tooltipFirstText = `Dzień: ${selectedDay}`;
+  const selectedMonth = !isMonthly(data)
+    ? data.transactions?.[firstNonZeroDataIndex].month || 0
+    : 0;
+
+  const tooltipFirstTextMonthly = `Dzień: ${selectedDay}`;
+  const tooltipFirstTextYearly = `Miesiąc: ${dayjs()
+    .month(selectedMonth - 1)
+    .format("MMMM")}`;
+
+  const tooltipFirstText = isMonthly(data)
+    ? tooltipFirstTextMonthly
+    : tooltipFirstTextYearly;
+
   const tooltipSecondText = `${
     type === TransactionType.EXPENSE ? "Wydatki:" : "Wpływy:"
   } ${(
@@ -73,10 +89,18 @@ export const getExpenseDetailsModalData = (
     ? data.transactions?.[firstNonZeroDataIndex].day || 0
     : 0;
 
-  const tooltipFirstText = `Kategoria: ${categoryLabels.Housing}`;
+  const selectedMonth = !isMonthly(data)
+    ? data.transactions?.[firstNonZeroDataIndex].month || 0
+    : 0;
+
+  const hoverCategory = isMonthly(data)
+    ? TransactionCategory.HOUSING
+    : TransactionCategory.ENTERTAINMENT;
+
+  const tooltipFirstText = `Kategoria: ${categoryLabels[hoverCategory]}`;
   const tooltipSecondText = `Kwota: ${(
     (data.transactions?.[clickedBarIndex].expense?.[
-      TransactionCategory.HOUSING.toLowerCase() as keyof ExpenseSummaryDto
+      hoverCategory.toLowerCase() as keyof ExpenseSummaryDto
     ] || 0) / 100
   ).toFixed(2)} zł`;
 
@@ -115,6 +139,7 @@ export const getExpenseDetailsModalData = (
     cellsCount: nonZeroExpenseCategoriesCount,
     clickedBarIndex,
     selectedDay,
+    selectedMonth,
     tooltip: {
       firstText: tooltipFirstText,
       secondText: tooltipSecondText,
