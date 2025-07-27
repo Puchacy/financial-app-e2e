@@ -21,5 +21,5 @@ test("SSR", async ({ page }) => {
 
   await page.goto("http://localhost:3000/dashboard");
 
-  await expect(page.getByTestId("bar-chart-bar").first()).toBeVisible();
+  await expect(page.getByTestId("monthly-chart-bar").first()).toBeVisible();
 });
