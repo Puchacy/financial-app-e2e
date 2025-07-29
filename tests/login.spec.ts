@@ -17,9 +17,7 @@ test.describe("Login process", () => {
   test("redirects to home page when accessing dashboard unauthenticated", async ({
     page,
   }) => {
-    await page.goto("/dashboard", {
-      waitUntil: "domcontentloaded",
-    });
+    await page.goto("/dashboard");
 
     await expect(page).toHaveURL("/");
   });

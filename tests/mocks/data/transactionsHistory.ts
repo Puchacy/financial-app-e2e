@@ -16,7 +16,7 @@ export const transactionsHistoryExistingUser: TransactionDto[] = [
     amount: 7048,
     category: TransactionCategory.FOOD,
     date: "2025-06-22",
-    description: "Kolacja w barze",
+    description: "Kolacja w restauracji",
     type: TransactionType.EXPENSE,
   },
   {
@@ -52,11 +52,10 @@ export const transactionsHistoryExistingUser: TransactionDto[] = [
     type: TransactionType.INCOME,
   },
   {
-    amount: 8000,
-    category: TransactionCategory.FOOD,
-    date: "2025-06-16",
-    description: "Kolacja w restauracji",
-    type: TransactionType.EXPENSE,
+    amount: 50000,
+    date: "2025-06-11",
+    description: "Zwrot",
+    type: TransactionType.INCOME,
   },
 ];
 
