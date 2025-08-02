@@ -1,6 +1,6 @@
 import { test, expect } from "next/experimental/testmode/playwright/msw";
 import { UserToken } from "./constants/user";
-import { handlers } from "./mocks/client";
+import { handlers } from "./mocks/handlers";
 
 test.use({
   mswHandlers: [handlers, { scope: "test" }],
@@ -80,7 +80,7 @@ test.describe("Header – authenticated user", () => {
   test("shows avatar and greeting", async ({ page }) => {
     await page.goto("/");
 
-    const avatar = page.getByTestId("header-circle-icon");
+    const avatar = page.getByTestId("header-avatar-icon");
     await expect(avatar).toBeVisible();
     await expect(page.getByText("Witaj Jan Kowalski")).toBeVisible();
 
@@ -113,7 +113,7 @@ test.describe("Header – authenticated user", () => {
   }) => {
     await page.goto("/dashboard");
 
-    await page.getByTestId("header-circle-icon").click();
+    await page.getByTestId("header-avatar-icon").click();
     await page.getByTestId("menu-item-home-page").click();
 
     await expect(page).toHaveURL("/");
@@ -122,7 +122,7 @@ test.describe("Header – authenticated user", () => {
   test("navigates to dashboard when clicking 'Mój panel'", async ({ page }) => {
     await page.goto("/");
 
-    await page.getByTestId("header-circle-icon").click();
+    await page.getByTestId("header-avatar-icon").click();
     await page.getByTestId("menu-item-dashboard").click();
 
     await expect(page).toHaveURL("/dashboard");
@@ -133,7 +133,7 @@ test.describe("Header – authenticated user", () => {
   }) => {
     await page.goto("/");
 
-    await page.getByTestId("header-circle-icon").click();
+    await page.getByTestId("header-avatar-icon").click();
     await page.getByTestId("menu-item-logout").click();
 
     await expect(page.getByTestId("confirmation-modal")).toBeVisible();

@@ -1,5 +1,5 @@
 import { test, expect } from "next/experimental/testmode/playwright/msw";
-import { handlers } from "./mocks/client";
+import { handlers } from "./mocks/handlers";
 import { existingUserCredentials } from "./constants/user";
 
 test.use({
@@ -17,9 +17,7 @@ test.describe("Login process", () => {
   test("redirects to home page when accessing dashboard unauthenticated", async ({
     page,
   }) => {
-    await page.goto("/dashboard", {
-      waitUntil: "domcontentloaded",
-    });
+    await page.goto("/dashboard");
 
     await expect(page).toHaveURL("/");
   });

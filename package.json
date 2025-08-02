@@ -7,6 +7,7 @@
     "test": "playwright test",
     "test:report": "playwright show-report",
     "test:ui": "playwright test --ui",
+    "tsc": "tsc --noEmit",
     "generate:api": "ts-node ./scripts/generate-api.ts"
   },
   "repository": {
@@ -24,6 +25,7 @@
   "devDependencies": {
     "@playwright/test": "^1.54.1",
     "@types/node": "^24.0.15",
+    "dayjs": "^1.11.13",
     "next": "^15.4.2",
     "openapi-typescript-codegen": "^0.29.0",
     "playwright-msw": "^3.0.1",
