@@ -1,6 +1,6 @@
 import { test, expect } from "next/experimental/testmode/playwright/msw";
 import { UserToken } from "./constants/user";
-import { handlers } from "./mocks/client";
+import { handlers } from "./mocks/handlers";
 
 test.use({
   mswHandlers: [handlers, { scope: "test" }],

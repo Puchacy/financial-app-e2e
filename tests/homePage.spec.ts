@@ -6,7 +6,6 @@ test.describe("Home Page", () => {
   test("displays header, footer and the page content", async ({ page }) => {
     await page.goto("/");
 
-    // Header
     await expect(page.getByTestId("header-logo")).toBeVisible();
     await expect(page.getByTestId("header-title")).toBeVisible();
     await expect(page.getByTestId("header-title")).toHaveText("MojeFinanse");
@@ -14,12 +13,10 @@ test.describe("Home Page", () => {
       page.getByRole("button", { name: "Zaloguj się" })
     ).toBeVisible();
 
-    // Title
     await expect(
       page.getByRole("heading", { name: "Aplikacja MojeFinanse", level: 1 })
     ).toBeVisible();
 
-    // Subtitle
     await expect(
       page.getByRole("heading", {
         name: "Zadbaj o swoje finanse w prosty i nowoczesny sposób – rejestruj transakcje, analizuj dane i korzystaj z automatycznych ułatwień opartych o AI.",
@@ -27,7 +24,6 @@ test.describe("Home Page", () => {
       })
     ).toBeVisible();
 
-    // Feature tiles
     for (const { title, text, dataTestId } of features) {
       await expect(page.getByTestId(dataTestId)).toBeVisible();
       await expect(
@@ -36,7 +32,6 @@ test.describe("Home Page", () => {
       await expect(page.getByText(text)).toBeVisible();
     }
 
-    // Testimonials
     await expect(
       page.getByRole("heading", { name: "Co mówią nasi użytkownicy", level: 4 })
     ).toBeVisible();
@@ -58,7 +53,6 @@ test.describe("Home Page", () => {
       ).toBeVisible();
     }
 
-    // Footer
     await expect(
       page.getByRole("heading", { name: "MojeFinanse", level: 5 })
     ).toBeVisible();

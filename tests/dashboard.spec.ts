@@ -1,7 +1,7 @@
 import dayjs from "dayjs";
 import "dayjs/locale/pl";
 import { test, expect } from "next/experimental/testmode/playwright/msw";
-import { handlers } from "./mocks/client";
+import { handlers } from "./mocks/handlers";
 import { existingUser, newUser, UserToken } from "./constants/user";
 import { monthlyTransactionsExistingUser } from "./mocks/data/monthlyTransactions";
 import { yearlyTransactionsExistingUser } from "./mocks/data/yearlyTransactions";
