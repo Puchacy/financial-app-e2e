@@ -3,10 +3,9 @@ import "dayjs/locale/pl";
 import { test, expect } from "next/experimental/testmode/playwright/msw";
 import { handlers } from "./mocks/client";
 import { existingUser, newUser, UserToken } from "./constants/user";
-import { categoryLabels } from "./constants/transaction";
 import { monthlyTransactionsExistingUser } from "./mocks/data/monthlyTransactions";
 import { yearlyTransactionsExistingUser } from "./mocks/data/yearlyTransactions";
-import { TransactionType } from "../api";
+import { TransactionCategory, TransactionType } from "../api";
 import { getChartData, getExpenseDetailsModalData } from "./utils/chart";
 
 dayjs.locale("pl");
@@ -120,10 +119,10 @@ test.describe("Dashboard - existing user", () => {
       await expect(categorySelect).toBeVisible();
       await categorySelect.click();
 
-      for (const label of Object.values(categoryLabels)) {
+      for (const category of Object.values(TransactionCategory)) {
         await expect(
           page.getByTestId(
-            `transaction-add-modal-category-item-${label.toLowerCase()}`
+            `transaction-add-modal-category-item-${category.toLowerCase()}`
           )
         ).toBeVisible();
       }
@@ -659,6 +658,36 @@ test.describe("Dashboard - existing user", () => {
       }
     });
   });
+
+  test.describe("Check footer", () => {
+    test("shows footer with all required elements", async ({ page }) => {
+      await expect(
+        page.getByRole("heading", { name: "MojeFinanse", level: 5 })
+      ).toBeVisible();
+
+      const linkAbout = page.getByRole("link", { name: "O nas" });
+      await expect(linkAbout).toBeVisible();
+      await expect(linkAbout).toHaveAttribute("href", "/about");
+
+      const linkContact = page.getByRole("link", { name: "Kontakt" });
+      await expect(linkContact).toBeVisible();
+      await expect(linkContact).toHaveAttribute("href", "/contact");
+
+      const linkPrivacy = page.getByRole("link", {
+        name: "Polityka prywatności",
+      });
+      await expect(linkPrivacy).toBeVisible();
+      await expect(linkPrivacy).toHaveAttribute("href", "/privacy");
+
+      await expect(
+        page
+          .locator("p", {
+            hasText: `© ${new Date().getFullYear()} Aplikacja MojeFinanse. Wszelkie prawa zastrzeżone.`,
+          })
+          .first()
+      ).toBeVisible();
+    });
+  });
 });
 
 test.describe("Dashboard - new user", () => {
@@ -766,10 +795,10 @@ test.describe("Dashboard - new user", () => {
       await expect(categorySelect).toBeVisible();
       await categorySelect.click();
 
-      for (const label of Object.values(categoryLabels)) {
+      for (const category of Object.values(TransactionCategory)) {
         await expect(
           page.getByTestId(
-            `transaction-add-modal-category-item-${label.toLowerCase()}`
+            `transaction-add-modal-category-item-${category.toLowerCase()}`
           )
         ).toBeVisible();
       }
@@ -936,6 +965,36 @@ test.describe("Dashboard - new user", () => {
       ).toContainText(
         "Dodaj swoją pierwszą transakcję, aby zobaczyć historię wydatków i wpływów."
       );
+    });
+  });
+
+  test.describe("Check footer", () => {
+    test("shows footer with all required elements", async ({ page }) => {
+      await expect(
+        page.getByRole("heading", { name: "MojeFinanse", level: 5 })
+      ).toBeVisible();
+
+      const linkAbout = page.getByRole("link", { name: "O nas" });
+      await expect(linkAbout).toBeVisible();
+      await expect(linkAbout).toHaveAttribute("href", "/about");
+
+      const linkContact = page.getByRole("link", { name: "Kontakt" });
+      await expect(linkContact).toBeVisible();
+      await expect(linkContact).toHaveAttribute("href", "/contact");
+
+      const linkPrivacy = page.getByRole("link", {
+        name: "Polityka prywatności",
+      });
+      await expect(linkPrivacy).toBeVisible();
+      await expect(linkPrivacy).toHaveAttribute("href", "/privacy");
+
+      await expect(
+        page
+          .locator("p", {
+            hasText: `© ${new Date().getFullYear()} Aplikacja MojeFinanse. Wszelkie prawa zastrzeżone.`,
+          })
+          .first()
+      ).toBeVisible();
     });
   });
 });

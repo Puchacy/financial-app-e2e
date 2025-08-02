@@ -1,4 +1,6 @@
+import { HttpResponse } from "next/experimental/testmode/playwright/msw";
 import {
+  CreateTransactionRequestDto,
   MonthlyTransactionsResponseDto,
   TransactionDto,
   TransactionDtoPagedResult,
@@ -18,6 +20,7 @@ import {
   yearlyTransactionsExistingUser,
   yearlyTransactionsNewUser,
 } from "../data/yearlyTransactions";
+import { ERROR_DESCRIPTION } from "../../constants/transaction";
 
 type getTransactionsHistoryResponseOptions = {
   userType: UserType;
@@ -80,3 +83,19 @@ export const getYearlyTransactionsResponse = (
   userType === UserType.EXISTING_USER
     ? yearlyTransactionsExistingUser
     : yearlyTransactionsNewUser;
+
+export const createTransactionResponse = (
+  body: CreateTransactionRequestDto
+): HttpResponse<TransactionDto | { error: string }> => {
+  if (body.description === ERROR_DESCRIPTION) {
+    return HttpResponse.json(
+      { error: "Internal Server Error" },
+      { status: 500 }
+    );
+  }
+
+  return HttpResponse.json({
+    id: 1,
+    ...body,
+  });
+};

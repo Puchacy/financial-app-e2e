@@ -6,11 +6,16 @@ import {
   getUserMeResponse,
 } from "./utils/users";
 import {
+  createTransactionResponse,
   getMonthlyTransactionsResponse,
   getTransactionsHistoryResponse,
   getYearlyTransactionsResponse,
 } from "./utils/transactions";
-import { LoginUserRequestDto, RegisterUserRequestDto } from "../../api";
+import {
+  CreateTransactionRequestDto,
+  LoginUserRequestDto,
+  RegisterUserRequestDto,
+} from "../../api";
 import { API_BASE_URL } from "./constants/api";
 
 export const handlers = [
@@ -32,6 +37,17 @@ export const handlers = [
     });
 
     return HttpResponse.json(response);
+  }),
+
+  http.post(`${API_BASE_URL}/api/v1/transactions`, async ({ request }) => {
+    const user = getUserFromRequest(request);
+
+    if (!user)
+      return HttpResponse.json({ error: "Unauthorized" }, { status: 401 });
+
+    const body = (await request.json()) as CreateTransactionRequestDto;
+
+    return createTransactionResponse(body);
   }),
 
   http.get(
